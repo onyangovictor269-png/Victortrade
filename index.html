@@ -1,8 +1,38 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VictorTrade</title><link rel="stylesheet" href="style.css"></head>
-<body><header><div><h1>VictorTrade</h1><small>Deriv Market Analysis Workspace</small></div><span id="status" class="pill">DISCONNECTED</span></header>
-<main><section class="card controls"><label>Market<select id="symbol"><option>1HZ100V</option><option>R_10</option><option>R_25</option><option>R_50</option><option>R_75</option><option>R_100</option></select></label><label>History<input id="count" type="number" value="100" min="30" max="500"></label><button id="start">Start Analysis</button><button id="stop" disabled>Stop</button></section>
-<section class="grid"><div class="card"><h2>Market</h2><div id="price">—</div><div id="updated">Waiting for data</div></div><div class="card"><h2>Signal</h2><div id="signal">WAIT</div><div id="confidence">0%</div><p id="reason">Start analysis to calculate a signal.</p></div></section>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VictorTrade Pro</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><div><h1>VictorTrade Pro</h1><small>Deriv market analysis & demo-trading workspace</small></div><span id="status" class="pill">DISCONNECTED</span></header>
+<main>
+<section class="card controls">
+<label>Market<select id="symbol"><option>1HZ100V</option><option>R_10</option><option>R_25</option><option>R_50</option><option>R_75</option><option>R_100</option></select></label>
+<label>History<input id="count" type="number" value="100" min="30" max="500"></label>
+<label>Stake<input id="stake" type="number" value="1" min="0.35" step="0.01"></label>
+<label>Duration (ticks)<input id="duration" type="number" value="5" min="1" max="20"></label>
+<button id="start">Start Analysis</button><button id="stop" disabled>Stop</button>
+</section>
+
+<section class="modebar card">
+<div><strong>Trading mode</strong><span id="modeBadge" class="mode">PAPER / DEMO SIMULATOR</span></div>
+<p>Demo simulator uses live Deriv ticks but does not send orders to your Deriv account. Real demo execution will be enabled after secure OAuth/backend connection.</p>
+<button id="demoStart">Start Demo Simulation</button><button id="demoStop" disabled>Stop Demo</button>
+</section>
+
+<section class="grid">
+<div class="card"><h2>Market</h2><div id="price">—</div><div id="updated">Waiting for data</div></div>
+<div class="card"><h2>Signal</h2><div id="signal">WAIT</div><div id="confidence">0%</div><p id="reason">Start analysis to calculate a signal.</p></div>
+</section>
+
 <section class="card"><h2>Live prices</h2><canvas id="chart" height="220"></canvas></section>
-<section class="card"><h2>Risk controls</h2><div class="risk"><label>Stake<input id="stake" type="number" value="1" min="0.35" step="0.01"></label><label>Max trades/day<input id="maxTrades" type="number" value="10" min="1"></label><label>Daily loss limit<input id="maxLoss" type="number" value="5" min="0" step="0.1"></label></div><p class="note">Paper analysis only. No automatic real-money orders are placed by this page.</p></section></main>
-<script src="app.js"></script></body></html>
+
+<section class="grid">
+<div class="card"><h2>Risk controls</h2><div class="risk">
+<label>Max trades/day<input id="maxTrades" type="number" value="10" min="1"></label>
+<label>Daily loss limit<input id="maxLoss" type="number" value="5" min="0" step="0.1"></label>
+<label>Max consecutive losses<input id="maxConsecutive" type="number" value="3" min="1"></label>
+</div><p id="riskState" class="note">Risk guard: READY</p></div>
+<div class="card"><h2>Demo account</h2><div class="stats"><div><b id="balance">$1000.00</b><small>Simulated balance</small></div><div><b id="trades">0</b><small>Trades</small></div><div><b id="wins">0</b><small>Wins</small></div><div><b id="pnl">$0.00</b><small>Session P/L</small></div></div></div>
+</section>
+
+<section class="card"><h2>Trade journal</h2><div class="tablewrap"><table><thead><tr><th>Time</th><th>Signal</th><th>Entry</th><th>Exit</th><th>Result</th><th>P/L</th></tr></thead><tbody id="journal"></tbody></table></div></section>
+<section class="card"><p class="note"><strong>Safety:</strong> VictorTrade is currently in paper/demo-simulator mode. No real-money order is placed. Never paste a Deriv password or long-lived token into this page. Authenticated Deriv trading requires secure OAuth/backend handling.</p></section>
+</main><script src="app.js"></script></body></html>
