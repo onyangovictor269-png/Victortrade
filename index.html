@@ -3,6 +3,7 @@
 <body>
 <header><div><h1>VictorTrade Pro</h1><small>Deriv market analysis & demo-trading workspace</small></div><span id="status" class="pill">DISCONNECTED</span></header>
 <main>
+<section class="card authbar"><div><strong>Deriv account connection</strong><p id="authMessage" class="note">Not connected. Connect securely to check authorization; this does not place trades.</p></div><div><button id="connectDeriv">Connect Deriv</button> <button id="disconnectDeriv" hidden>Disconnect</button></div></section>
 <section class="card controls">
 <label>Market<select id="symbol"><option>1HZ100V</option><option>R_10</option><option>R_25</option><option>R_50</option><option>R_75</option><option>R_100</option></select></label>
 <label>History<input id="count" type="number" value="100" min="30" max="500"></label>
