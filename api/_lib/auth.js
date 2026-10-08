@@ -34,7 +34,9 @@ function parseCookies(req) {
   return output;
 }
 function setCookie(res, name, value, maxAge) {
-  res.setHeader("Set-Cookie", `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`);
+  const cookie = `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
+  const existing = res.getHeader("Set-Cookie");
+  res.setHeader("Set-Cookie", existing ? [...(Array.isArray(existing) ? existing : [existing]), cookie] : cookie);
 }
 function clearCookie(res, name) { setCookie(res, name, "", 0); }
 function randomBase64Url(bytes) { return b64(crypto.randomBytes(bytes)); }
