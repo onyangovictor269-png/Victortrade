@@ -14,3 +14,26 @@ function renderJournal(){$("journal").innerHTML=journal.slice(0,20).map(t=>'<tr>
 function startDemo(){if(demo)return;if(!$("start").disabled)start();demo=true;$("demoStart").disabled=true;$("demoStop").disabled=false;$("modeBadge").textContent="PAPER / DEMO SIMULATOR ACTIVE";demoTimer=setInterval(()=>{if(activeTrade){activeTrade.left--;if(activeTrade.left<=0)settle()}},1000)}
 function stopDemo(){demo=false;clearInterval(demoTimer);demoTimer=null;activeTrade=null;$("demoStart").disabled=false;$("demoStop").disabled=true;$("modeBadge").textContent="PAPER / DEMO SIMULATOR";$("riskState").textContent="Risk guard: READY"}
 $("start").onclick=start;$("stop").onclick=stop;$("demoStart").onclick=startDemo;$("demoStop").onclick=stopDemo;window.addEventListener("resize",draw);renderStats();
+
+async function refreshDerivAuth() {
+  const message = $("authMessage"), connect = $("connectDeriv"), disconnect = $("disconnectDeriv");
+  try {
+    const response = await fetch("/api/auth/status", { credentials: "same-origin", cache: "no-store" });
+    const data = await response.json();
+    if (data.connected) {
+      message.textContent = data.message || "Deriv authorization is connected. No trades are placed by this check.";
+      $("status").textContent = "DERIV AUTHORIZED";
+      connect.textContent = "Reconnect Deriv";
+      disconnect.hidden = false;
+    } else {
+      message.textContent = data.error || "Not connected. Tap Connect Deriv to authorize securely.";
+      connect.textContent = "Connect Deriv";
+      disconnect.hidden = true;
+    }
+  } catch (_) {
+    message.textContent = "Connection status unavailable. The site may still be deploying the secure backend.";
+  }
+}
+$("connectDeriv").addEventListener("click", () => { window.location.href = "/api/auth/login"; });
+$("disconnectDeriv").addEventListener("click", () => { window.location.href = "/api/auth/logout"; });
+refreshDerivAuth();
