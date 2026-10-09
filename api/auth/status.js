@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
       connected: true,
       demoAvailable: Boolean(demo),
       accountType: demo ? "demo" : "authorized",
-      message: demo ? "Connected. Demo account found; trading is not enabled by this connection check." : "Authorization received. Please verify your demo account in Deriv before any trading."
+      message: demo ? "Connected. Demo account found. You can request one confirmed demo order from the demo-trading panel." : "Authorization received, but no demo account was found. Demo execution remains disabled."
     });
   } catch (error) {
     return res.status(200).json({ connected: false, error: "Connection status could not be verified. Please reconnect." });
