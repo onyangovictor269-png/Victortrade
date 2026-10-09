@@ -14,8 +14,15 @@
 
 <section class="modebar card">
 <div><strong>Trading mode</strong><span id="modeBadge" class="mode">PAPER / DEMO SIMULATOR</span></div>
-<p>Demo simulator uses live Deriv ticks but does not send orders to your Deriv account. Real demo execution will be enabled after secure OAuth/backend connection.</p>
+<p>The simulator uses live Deriv ticks but does not place account orders. Use the separate one-time demo order below to test actual demo execution.</p>
 <button id="demoStart">Start Demo Simulation</button><button id="demoStop" disabled>Stop Demo</button>
+</section>
+
+<section class="card">
+<h2>One-time Deriv demo order</h2>
+<p class="note">This button can place exactly one order on a verified demo account. It never selects a real-money account. First test is limited to a stake of $1.00 or less and requires confirmation.</p>
+<button id="placeDemoTrade" disabled>Place one demo trade</button>
+<p id="tradeStatus" class="note" role="status">Connect Deriv and start analysis to enable a test order.</p>
 </section>
 
 <section class="grid">
